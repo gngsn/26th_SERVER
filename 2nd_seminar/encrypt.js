@@ -11,4 +11,4 @@ const encrypt = (salt, password) => {
 
 const password = 'fl0wer';
 const salt = crypto.randomBytes(32).toString('hex');
-encrypt( salt, password);
+encrypt(salt, password);
