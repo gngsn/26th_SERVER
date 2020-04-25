@@ -21,7 +21,7 @@ function promiseMain () {
     })
 }
 
-async function asyncManin () {
+async function asyncMain () {
     let result = await asyncFunc1('Hello')
     console.log(result)
     result = await asyncFunc2('world')
