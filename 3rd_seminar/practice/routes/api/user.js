@@ -84,4 +84,16 @@ router.post('/signin', async (req, res) => {
     // 성공 - login success와 함께 user Id 반환
 });
 
+/* 
+    ✔️ get profile
+    METHOD : GET
+    URI : localhost:3000/api/user/profile/:id
+    RESPONSE STATUS : 200 (OK)
+    RESPONSE DATA : User Id, name, email
+*/
+router.get('/profile/:id', async (req, res) => {
+    // request params 에서 데이터 가져오기
+    // 존재하는 아이디인지 확인 - 없다면 No user 반환
+    // 성공 - login success와 함께 user Id 반환
+});
 module.exports = router;
