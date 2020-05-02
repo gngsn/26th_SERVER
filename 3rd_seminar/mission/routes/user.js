@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
-let User = require('../../models/user');
-let util = require('../../modules/util');
-let statusCode = require('../../modules/statusCode');
-let resMessage = require('../../modules/responseMessage');
+let User = require('../models/user');
+let util = require('../modules/util');
+let statusCode = require('../modules/statusCode');
+let resMessage = require('../modules/responseMessage');
 
 /* 
     ✔️ sign up
     METHOD : POST
-    URI : localhost:3000/api/user/signup
+    URI : localhost:3000/user/signup
     REQUEST BODY : id, name, password, email
     RESPONSE STATUS : 200 (OK)
     RESPONSE DATA : User ID
@@ -45,7 +45,7 @@ router.post('/signup', async (req, res) => {
 /* 
     ✔️ sign in
     METHOD : POST
-    URI : localhost:3000/api/user/signin
+    URI : localhost:3000/user/signin
     REQUEST BODY : id, name
     RESPONSE STATUS : 200 (OK)
     RESPONSE DATA : User ID
@@ -83,7 +83,7 @@ router.post('/signin', async (req, res) => {
 /* 
     ✔️ get profile
     METHOD : GET
-    URI : localhost:3000/api/user/profile/:id
+    URI : localhost:3000/user/profile/:id
     RESPONSE STATUS : 200 (OK)
     RESPONSE DATA : User Id, name, email
 */
@@ -92,7 +92,7 @@ router.get('/profile/:id', async (req, res) => {
     const id = req.params.id;
     const user = User.filter(user => user.id == id)[0];
     // 존재하는 아이디인지 확인 - 없다면 No user 반환
-    if (user.length == 0) {
+    if (user === undefined) {
         res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, resMessage.NO_USER));
         return;

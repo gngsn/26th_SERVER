@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
-let User = require('../../models/user');
-let util = require('../../modules/util');
-let statusCode = require('../../modules/statusCode');
-let resMessage = require('../../modules/responseMessage');
+let User = require('../models/user');
+let util = require('../modules/util');
+let statusCode = require('../modules/statusCode');
+let resMessage = require('../modules/responseMessage');
 
 /* 
     ✔️ sign up
     METHOD : POST
-    URI : localhost:3000/api/user/signup
+    URI : localhost:3000/user/signup
     REQUEST BODY : id, name, password, email
     RESPONSE STATUS : 200 (OK)
     RESPONSE DATA : User ID
@@ -71,7 +71,7 @@ router.post('/signup', async (req, res) => {
 /* 
     ✔️ sign in
     METHOD : POST
-    URI : localhost:3000/api/user/signin
+    URI : localhost:3000/user/signin
     REQUEST BODY : id, password
     RESPONSE STATUS : 200 (OK)
     RESPONSE DATA : User ID
@@ -87,7 +87,7 @@ router.post('/signin', async (req, res) => {
 /* 
     ✔️ get profile
     METHOD : GET
-    URI : localhost:3000/api/user/profile/:id
+    URI : localhost:3000/user/profile/:id
     RESPONSE STATUS : 200 (OK)
     RESPONSE DATA : User Id, name, email
 */
