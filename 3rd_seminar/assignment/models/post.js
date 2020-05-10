@@ -15,9 +15,9 @@ let postData = [
     },
     {
         idx: 2,
-        title: '안녕하세요22 ~',
-        author: 'seon',
-        content: '안녕하세요1212 ~ 테스트임다',
+        "title": "postman",
+        "author": "gyeongseon",
+        "content": "postman test~",
         created_at: '2020-05-10'
     },
 ];
