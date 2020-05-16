@@ -12,7 +12,7 @@ SELECT * FROM post;
 
 
 /-- postIdx가 2인 post 개체들을 모두 출력하기 --/
-/-- 선택 ) post.sql 17 ~ 26을 실행시켰다면 userIdx가 2인 post+user 개체를 JOIN으로 출력해보기 --/
+/-- 선택 ) post.sql 17 ~ 26을 실행시켰다면 userIdx가 4인 post+user 개체를 JOIN으로 출력해보기 --/
 
 
 /-- postIdx가 2인 데이터 날짜 현재로 수정하기 --/
