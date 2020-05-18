@@ -20,7 +20,22 @@ const user = {
             throw err;
         }
     },
-    checkUser: async (id) => {},
+    checkUser: async (id) => {
+        const query = `SELECT * FROM ${table} WHERE id="${id}"`;
+        try {
+            const result = await pool.queryParam(query);
+            if (result.length === 0) {
+                return false;
+            } else return true;
+        } catch (err) {
+            if (err.errno == 1062) {
+                console.log('checkUser ERROR : ', err.errno, err.code);
+                return -1;
+            }
+            console.log('checkUser ERROR : ', err);
+            throw err;
+        }
+    },
     signin: async (id, password) => {},
 }
 
