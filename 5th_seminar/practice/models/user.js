@@ -37,6 +37,9 @@ const user = {
         }
     },
     getUserById: async (id) => {
+        // query문 작성
+        // pool module로 전달해서 결과값 받기
+        // try - catch로 ERROR 받기
     },
 }
 

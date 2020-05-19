@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
+const UserModel = require('../models/user');
 const util = require('../modules/util');
 const statusCode = require('../modules/statusCode');
 const resMessage = require('../modules/responseMessage');
-const crypto = require('../modules/crypto');
+const encrypt = require('../modules/crypto');
 
 router.post('/signup', async (req, res) => {
     const {
@@ -19,7 +19,7 @@ router.post('/signup', async (req, res) => {
         return;
     }
     // 사용자 중인 아이디가 있는지 확인
-    if (await User.checkUser(id)) {
+    if (await UserModel.checkUser(id)) {
         res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, resMessage.ALREADY_ID));
         return;
@@ -27,8 +27,8 @@ router.post('/signup', async (req, res) => {
     const {
         salt,
         hashed
-    } = await crypto.encrypt(password);
-    const idx = await User.signup(id, name, hashed, salt, email);
+    } = await encrypt.encrypt(password);
+    const idx = await UserModel.signup(id, name, hashed, salt, email);
     if (idx === -1) {
         return res.status(statusCode.DB_ERROR)
             .send(util.fail(statusCode.DB_ERROR, resMessage.DB_ERROR));
@@ -55,7 +55,7 @@ router.post('/signin', async (req, res) => {
     
     // 로그인이 성공적으로 마쳤다면 - LOGIN_SUCCESS 전달
     res.status(statusCode.OK)
-        .send(util.success(statusCode.OK, resMessage.LOGIN_SUCCESS, {userId: id}));
+        .send(util.success(statusCode.OK, resMessage.LOGIN_SUCCESS, { userIdx: user[0].userIdx}));
 });
 
 module.exports = router;

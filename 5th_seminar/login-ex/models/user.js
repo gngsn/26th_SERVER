@@ -37,6 +37,16 @@ const user = {
         }
     },
     getUserById: async (id) => {
+        // query문 작성
+        const query = `SELECT * FROM ${table} WHERE id="${id}"`;
+        // pool module로 전달해서 결과값 받기
+        // try - catch로 ERROR 받기
+        try {
+            return await pool.queryParam(query);
+        } catch (err) {
+            console.log('checkUser ERROR : ', err);
+            throw err;
+        }
     },
 }
 
