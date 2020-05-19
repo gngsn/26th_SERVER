@@ -4,7 +4,6 @@ const statusCode = require('../modules/statusCode');
 const resMessage = require('../modules/responseMessage');
 const crypto = require('../modules/crypto');
 
-
 const user = {
     signup : async (req, res) => {
         const {
