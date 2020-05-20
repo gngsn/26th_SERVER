@@ -4,6 +4,8 @@ const util = require('../modules/util');
 const statusCode = require('../modules/statusCode');
 const resMessage = require('../modules/responseMessage');
 const jwt = require('../modules/jwt');
+const TOKEN_EXPIRED = -3
+const TOKEN_INVALID = -2
 
 router.get('/local', async (req, res) => {
     var token = req.headers.token;
@@ -11,11 +13,10 @@ router.get('/local', async (req, res) => {
             return res.json(util.fail(statusCode.BAD_REQUEST, resMessage.EMPTY_TOKEN));
         }
         const user = await jwt.verify(token);
-        console.log(user);
-        if (user == this.TOKEN_EXPIRED) {
+        if (user == TOKEN_EXPIRED) {
             return res.json(util.fail(statusCode.UNAUTHORIZED, resMessage.EXPIRED_TOKEN));
         }
-        if (user == this.TOKEN_INVALID) {
+        if (user == TOKEN_INVALID) {
             return res.json(util.fail(statusCode.UNAUTHORIZED, resMessage.INVALID_TOKEN));
         }
         if (user.idx == undefined) {
