@@ -2,18 +2,20 @@ const randToken = require('rand-token');
 const jwt = require('jsonwebtoken');
 const secretKey = require('../config/secretKey').secretKey;
 const options = require('../config/secretKey').options;
+const refreshOptions = require('../config/secretKey').refreshOptions;
+const UserModel = require('../models/user');
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 
 module.exports = {
     sign: async (user) => {
         const payload = {
-            idx: user.userIdx,
+            userIdx: user.userIdx,
             name: user.name
         };
         const result = {
             token: jwt.sign(payload, secretKey, options),
-            refreshToken: randToken.uid(256)
+            refreshToken: jwt.sign(payload, secretKey, refreshOptions)
         };
         return result;
     },
@@ -37,11 +39,28 @@ module.exports = {
         }
         return decoded;
     },
-    refresh: (user) => {
-        const payload = {
-            idx: user.userIdx,
-            name: user.name
-        };
-        return jwt.sign(payload, secretOrPrivateKey, options);
+    refresh: async (refreshToken) => {
+        try {
+            const result = jwt.verify(refreshToken, secretKey);
+            if (result.userIdx === undefined) {
+                return TOKEN_INVALID;
+            }
+            const user = await UserModel.getUserByIdx(result.userIdx);
+            if (refreshToken !== user[0].refreshToken) {
+                console.log('invalid refresh token');
+                return TOKEN_INVALID;
+            }
+            const payload = {
+                userIdx: user[0].userIdx,
+                name: user[0].name
+            };
+            return {
+                token: jwt.sign(payload, secretKey, options),
+                refreshToken: jwt.sign(payload, secretKey, refreshOptions)
+            };
+        } catch (err) {
+            console.log('jwt.js ERROR : ', err);
+            throw err;
+        }
     }
 }
