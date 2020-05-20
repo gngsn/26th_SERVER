@@ -56,6 +56,15 @@ const user = {
             console.log('checkUser ERROR : ', err);
             throw err;
         }
+    },
+    updateRefreshToken: async (idx, refreshToken) => {
+        const query = `UPDATE ${table} SET refreshToken=? WHERE userIdx=?`;
+        try {
+            await pool.queryParamArr(query, [refreshToken, idx]);
+        } catch (err) {
+            console.log('checkUser ERROR : ', err);
+            throw err;
+        }
     }
 }
 

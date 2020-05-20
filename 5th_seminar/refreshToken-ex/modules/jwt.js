@@ -17,13 +17,13 @@ module.exports = {
             token: jwt.sign(payload, secretKey, options),
             refreshToken: jwt.sign(payload, secretKey, refreshOptions)
         };
+        await UserModel.updateRefreshToken(payload.userIdx, result.refreshToken);
         return result;
     },
     verify: async (token) => {
         let decoded;
         try {
             decoded = jwt.verify(token, secretKey);
-            console.log(TOKEN_EXPIRED);
         } catch (err) {
             if (err.message === 'jwt expired') {
                 console.log('expired token');
@@ -54,10 +54,12 @@ module.exports = {
                 userIdx: user[0].userIdx,
                 name: user[0].name
             };
-            return {
+            const dto = {
                 token: jwt.sign(payload, secretKey, options),
                 refreshToken: jwt.sign(payload, secretKey, refreshOptions)
             };
+            await UserModel.updateRefreshToken(payload.userIdx, dto.refreshToken);
+            return dto;
         } catch (err) {
             console.log('jwt.js ERROR : ', err);
             throw err;
