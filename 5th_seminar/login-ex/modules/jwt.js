@@ -2,20 +2,18 @@ const randToken = require('rand-token');
 const jwt = require('jsonwebtoken');
 const secretKey = require('../config/secretKey').secretKey;
 const options = require('../config/secretKey').options;
-const refreshOptions = require('../config/secretKey').refreshOptions;
-const UserModel = require('../models/user');
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
 
 module.exports = {
     sign: async (user) => {
         const payload = {
-            userIdx: user.userIdx,
+            idx: user.userIdx,
             name: user.name
         };
         const result = {
             token: jwt.sign(payload, secretKey, options),
-            refreshToken: jwt.sign(payload, secretKey, refreshOptions)
+            refreshToken: randToken.uid(256)
         };
         return result;
     },
@@ -23,7 +21,6 @@ module.exports = {
         let decoded;
         try {
             decoded = jwt.verify(token, secretKey);
-            console.log(TOKEN_EXPIRED);
         } catch (err) {
             if (err.message === 'jwt expired') {
                 console.log('expired token');
@@ -38,29 +35,5 @@ module.exports = {
             }
         }
         return decoded;
-    },
-    refresh: async (refreshToken) => {
-        try {
-            const result = jwt.verify(refreshToken, secretKey);
-            if (result.userIdx === undefined) {
-                return TOKEN_INVALID;
-            }
-            const user = await UserModel.getUserByIdx(result.userIdx);
-            if (refreshToken !== user[0].refreshToken) {
-                console.log('invalid refresh token');
-                return TOKEN_INVALID;
-            }
-            const payload = {
-                userIdx: user[0].userIdx,
-                name: user[0].name
-            };
-            return {
-                token: jwt.sign(payload, secretKey, options),
-                refreshToken: jwt.sign(payload, secretKey, refreshOptions)
-            };
-        } catch (err) {
-            console.log('jwt.js ERROR : ', err);
-            throw err;
-        }
     }
 }

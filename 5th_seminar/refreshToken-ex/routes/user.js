@@ -64,11 +64,11 @@ router.post('/signin', async (req, res) => {
             .send(util.fail(statusCode.BAD_REQUEST, resMessage.MISS_MATCH_PW));
     }
 
-    const {token, _} = await jwt.sign(user[0]);
+    const {token, refreshToken} = await jwt.sign(user[0]);
     
     // 로그인이 성공적으로 마쳤다면 - LOGIN_SUCCESS 전달
     res.status(statusCode.OK)
-        .send(util.success(statusCode.OK, resMessage.LOGIN_SUCCESS, { accessToken : token}));
+        .send(util.success(statusCode.OK, resMessage.LOGIN_SUCCESS, { accessToken : token, refreshToken: refreshToken}));
 });
 
 module.exports = router;
