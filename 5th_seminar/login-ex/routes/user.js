@@ -52,14 +52,12 @@ router.post('/signin', async (req, res) => {
 
     // User의 아이디가 있는지 확인 - 없다면 NO_USER 반납
     const user = await UserModel.getUserById(id);
-    console.log('user : ', user);
     if (user[0] === undefined) {
         return res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, resMessage.NO_USER));
     }
     // req의 Password 확인 - 틀렸다면 MISS_MATCH_PW 반납
     const hashed = await encrypt.encryptWithSalt(password, user[0].salt);
-    console.log('hashed : ', hashed);
     if (hashed !== user[0].password) {
         return res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, resMessage.MISS_MATCH_PW));
