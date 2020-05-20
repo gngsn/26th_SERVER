@@ -4,7 +4,7 @@ const secretKey = require('../config/secretKey').secretKey;
 const options = secretKey.options;
 
 module.exports = {
-    sign: (user) => {
+    sign: async (user) => {
         const payload = {
             idx: user.userIdx,
             name: user.name
@@ -15,10 +15,11 @@ module.exports = {
         };
         return result;
     },
-    verify: (token) => {
+    verify: async (token) => {
         let decoded;
         try {
-            decoded = jwt.verify(token, secretOrPrivateKey);
+            decoded = jwt.verify(token, secretKey);
+            console.log('jwt.js - decoded : ', decoded);
         } catch (err) {
             if (err.message === 'jwt expired') {
                 console.log('expired token');

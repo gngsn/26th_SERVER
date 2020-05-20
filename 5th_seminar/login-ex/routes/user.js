@@ -5,6 +5,7 @@ const util = require('../modules/util');
 const statusCode = require('../modules/statusCode');
 const resMessage = require('../modules/responseMessage');
 const encrypt = require('../modules/crypto');
+const jwt = require('../modules/jwt');
 
 router.post('/signup', async (req, res) => {
     const {
@@ -62,10 +63,12 @@ router.post('/signin', async (req, res) => {
         return res.status(statusCode.BAD_REQUEST)
             .send(util.fail(statusCode.BAD_REQUEST, resMessage.MISS_MATCH_PW));
     }
+
+    const {token, _} = await jwt.sign(user[0]);
     
     // 로그인이 성공적으로 마쳤다면 - LOGIN_SUCCESS 전달
     res.status(statusCode.OK)
-        .send(util.success(statusCode.OK, resMessage.LOGIN_SUCCESS, { userIdx: user[0].userIdx}));
+        .send(util.success(statusCode.OK, resMessage.LOGIN_SUCCESS, { accessToken : token}));
 });
 
 module.exports = router;
