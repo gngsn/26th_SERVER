@@ -61,6 +61,7 @@ module.exports = {
             return res.status(statusCode.BAD_REQUEST)
                 .send(util.fail(statusCode.BAD_REQUEST, resMessage.MISS_MATCH_PW));
         }
+        console.log(user[0]);
     
         const {token, refreshToken} = await jwt.sign(user[0]);
         
