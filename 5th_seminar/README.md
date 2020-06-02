@@ -5,7 +5,9 @@
 
 ![terminal](https://user-images.githubusercontent.com/43839834/82492613-71946c80-9b21-11ea-9d7c-beadcc2f8ce3.png)
 
-⚠️ 조건 : 사진 속 aws -- ubuntu@ip-172-31-32-114 와 같이 EC2에 접속했다는 것이 보여야 함.
+EX ) pm2 logs  명령어
+
+⚠️ 조건 : 사진 속 aws -- ubuntu@ip-172-31-32-114 와 같이 EC2에 접속했다는 것이 보여야 함. 
 ### ㅤ
 ### ㅤ
 ### 2. POSTMAN TEST
