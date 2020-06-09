@@ -6,5 +6,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 router.use('/user', require('./user'));
+// multer array 추가 
 
 module.exports = router;
