@@ -76,19 +76,8 @@ module.exports = {
     },
     updateProfile: async (req, res) => {
         // 데이터 받아오기
-        const userIdx = req.decoded.userIdx;
-        const profileImg = req.file.path;
         // data check - undefined
-        if (profileImg === undefined || !userIdx) {
-            return res.status(CODE.OK).send(util.success(CODE.BAD_REQUEST, MSG.NULL_VALUE));
-        }
         // image type check
-        const type = req.file.mimetype.split('/')[1];
-        if (type !== 'jpeg' && type !== 'jpg' && type !== 'png') {
-            return res.status(CODE.OK).send(util.success(CODE.OK, MSG.UNSUPPORTED_TYPE));
-        }
         // call model - database
-        const result = await UserModel.updateProfile(userIdx, profileImg);
-        res.status(CODE.OK).send(util.success(CODE.OK, MSG.UPDATE_PROFILE_SUCCESS, result));
     }
 }

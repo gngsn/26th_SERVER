@@ -2,10 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserController = require('../controllers/user');
 const AuthMiddleware = require('../middlewares/auth');
-const multer = require('multer');
-const upload = multer({
-    dest: 'upload/'
-});
+
 router.post('/signup', UserController.signup);
 router.post('/signin', UserController.signin);
 
@@ -17,6 +14,6 @@ router.post('/signin', UserController.signin);
     REQUEST BODY : ⭐️image file ⭐️
     RESPONSE DATA : user profile
 */
-router.post('/profile', AuthMiddleware.checkToken, upload.single('profile'), UserController.updateProfile);
+router.post('/profile', AuthMiddleware.checkToken, UserController.updateProfile);
 
 module.exports = router;
