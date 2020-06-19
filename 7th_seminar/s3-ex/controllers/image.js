@@ -1,16 +1,25 @@
 const util = require('../modules/util');
 const CODE = require('../modules/statusCode');
+const MSG = require('../modules/responseMessage');
 
 module.exports = {
+    single: async (req, res) => {
+        const image = req.file;
+        if (image === undefined) {
+            return res.status(CODE.OK).send(util.success(CODE.BAD_REQUEST, MSG.IMAGE_NOT_FOUND));
+        }
+        res.status(CODE.OK).send(util.success(CODE.OK, MSG.SAVE_IMAGE_SUCCESS, {
+            image: image.location
+        }));
+    },
     array: async (req, res) => {
         const images = req.files;
-        console.log(images);
         if (images === undefined) {
-            return res.status(CODE.OK).send(util.success(CODE.BAD_REQUEST, "이미지를 첨부해주세요."));
+            return res.status(CODE.OK).send(util.success(CODE.BAD_REQUEST, MSG.IMAGE_NOT_FOUND));
         }
         const location = images.map(img => img.location);
-        res.status(CODE.OK).send(util.success(CODE.OK, images.length + "개의 이미지 저장 성공 ", {
-            image: location
+        res.status(CODE.OK).send(util.success(CODE.OK, images.length + '개의 '+ MSG.SAVE_IMAGE_SUCCESS, {
+            images: location
         }));
     }
 }

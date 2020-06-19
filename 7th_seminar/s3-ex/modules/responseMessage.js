@@ -24,5 +24,10 @@ module.exports = {
     READ_PROFILE_SUCCESS: '프로필 조회 성공',
     UNSUPPORTED_TYPE: '지원하지 않는 타입입니다.',
 
+    // 이미지 다루기
+    BAD_REQUEST_IMAGE: '이미지를 잘못 요청하셨습니다.',
+    SAVE_IMAGE_SUCCESS: '이미지 저장 성공',
+    IMAGE_NOT_FOUND: '이미지를 첨부해주세요.',
+
     DB_ERROR: 'DB 오류'
 };
