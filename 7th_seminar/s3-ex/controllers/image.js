@@ -1,6 +1,6 @@
-const util = require('../modules/util');
+const util = require('../modules/utils/util');
 const CODE = require('../modules/statusCode');
-const MSG = require('../modules/responseMessage');
+const MSG = require('../modules/utils/responseMessage');
 
 module.exports = {
     single: async (req, res) => {
